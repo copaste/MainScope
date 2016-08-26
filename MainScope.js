@@ -144,7 +144,7 @@
       }
 
       // Set the prototype for MainScope
-      MainScope.prototype = Object.create(proto.slice(0));
+      MainScope.prototype = Object.create(proto);
       var mainScope = new MainScope();
 
       if( newScope===true ) {
