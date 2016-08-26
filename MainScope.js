@@ -7,7 +7,7 @@
     settable = false,
     callbacks = {},
     arrayMethods = ['push', 'pop', 'shift', 'unshift', 'splice'],
-    defaults = ['filter'];
+    defaults = [];
 
   proto = {
     createPrivateProperty: function(appendObj, propName) {
