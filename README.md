@@ -17,9 +17,12 @@ app.controller(['MainScope', function(MainsScope) {
       byWeight: null
     }
   };
-
-  this.scope = MainScope.addProp( 'filters', ObjectILikeToListenOn.filters );
-  this.scope = MainScope.addProp( 'sort', ObjectILikeToListenOn.sort );
+  
+  this.scope = MainScope;
+  // here we add the entire object at once, as a value for property name 'actions'
+  this.scope.addProp( 'actions', ObjectILikeToListenOn ); 
+  this.scope.addProp( 'filters', ObjectILikeToListenOn.filters );
+  this.scope.addProp( 'sort', ObjectILikeToListenOn.sort );
   
   // That is how we listen for changes on certain property
   this.scope.on('filters.age', function(newVal, oldVal, propMap, propName) {
