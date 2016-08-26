@@ -1,14 +1,14 @@
 (function (exports) {
   'use strict';
   /* exported defineMethod */
-  
+
   var proto = {},
-    	updater,
-    	settable = false,
-    	callbacks = {},
-    	arrayMethods = ['push', 'pop', 'shift', 'unshift', 'splice'],
-    	defaults = ['filter'];
-	
+    updater,
+    settable = false,
+    callbacks = {},
+    arrayMethods = ['push', 'pop', 'shift', 'unshift', 'splice'],
+    defaults = ['filter'];
+
   proto = {
     createPrivateProperty: function(appendObj, propName) {
       return Object.defineProperty(appendObj, "_" + propName, {
@@ -21,8 +21,8 @@
         map,
         level = level || 0,
         mapper = mapper || [propName];
-        // fix mapper if level is less than its lenght
-      	mapper = mapper.slice(0, level);
+      // fix mapper if level is less than its lenght
+      mapper = mapper.slice(0, level);
 
       var obj = Object.defineProperty(appendObj, propName, {
         get: function() {
@@ -30,8 +30,8 @@
         },
         set: function(newVal) {
           var _self = this,
-            	oldVal,
-            	callback;
+            oldVal,
+            callback;
 
           if (newVal && newVal !== protoObj["_" + propName]) {
             if (angular.isObject(newVal) && !Array.isArray(newVal)) {
@@ -43,12 +43,12 @@
               angular.forEach(newVal, function(val, name) {
                 if (typeof val !== 'function') {
                   protoObj.createProperty(_self["_" + propName], name, val, mapper, level);
-                  
+
                   // Creates a mapper to each level on the object
                   mapper[level] = name;
                   protoObj.createPrivateProperty(_self["_" + propName], 'mapper_');
                   _self["_" + propName]['_mapper_'] = mapper.slice(0, mapper.length - 1).join('.');
-                } 
+                }
                 else {
                   _self["_" + propName][name] = val;
                 }
@@ -75,28 +75,28 @@
             if (typeof callback === 'function') {
               callback(newVal, oldVal, this['_mapper_'] + '.' + propName);
             }
-            
+
             // Update the changes counter
             Object.defineProperty(protoObj, "$timesChanged", {
               value: protoObj.$timesChanged += 1
             });
-						
-						// If the property is an array, detect changes from its methods
+
+            // If the property is an array, detect changes from its methods
             if (Array.isArray(newVal)) {
               arrayMethods.forEach(function(prop) {
                 newVal[prop] = function() {
                   var oldArr = this.slice(0);
                   var newEntry = Array.prototype[prop].apply(this, arguments);
-									
+
                   if (typeof callback === 'function') {
                     callback(this, oldArr, _self['_mapper_'] + '.' + propName);
                   }
-                  
+
                   // Update the changes counter
                   Object.defineProperty(protoObj, "$timesChanged", {
                     value: protoObj.$timesChanged += 1
                   });
-                  
+
                   return newEntry;
                 };
               });
@@ -123,7 +123,7 @@
     off: function(selector) {
       if (!selector) {
         callbacks = {};
-      } 
+      }
       else {
         callbacks[selector] = null;
       }
@@ -131,9 +131,9 @@
       return this;
     },
     init: function(newScope) {
-    	
-    	// Constructor function for MainScope
-    	function MainScope() {
+
+      // Constructor function for MainScope
+      function MainScope() {
         // Define inner property which will count the changes in the object
         Object.defineProperty(this, '$timesChanged', {
           writable: false,
@@ -142,20 +142,20 @@
           value: 0
         });
       }
- 			
- 			// Set the prototype for MainScope
+
+      // Set the prototype for MainScope
       MainScope.prototype = Object.create(proto.slice(0));
-  		var mainScope = new MainScope();
-      
+      var mainScope = new MainScope();
+
       if( newScope===true ) {
         return new MainScope();
       }
-      
+
       // TODO: Make this configurable from outside
       defaults.forEach(function(name) {
         mainScope.addProp(name);
       });
-      
+
       return mainScope;
     },
     $new: function(options) {
@@ -164,12 +164,12 @@
   };
 
   //return proto.init();
-  
+
   /* global angular, MainScope, MainScope */
 
   angular.module('MainScope', [])
     .factory('MainScope', function () {
       return proto.init();
-  	});
-  
+    });
+
 }(typeof window === 'undefined' ? module.exports : window));
