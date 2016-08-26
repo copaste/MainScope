@@ -1,0 +1,27 @@
+{
+  "name": "mainscope",
+  "main": "MainScope.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/copaste/MainScope",
+  "authors": [
+    "Yordan Nikolov <yordan.nikolov@outlook.com>"
+  ],
+  "description": "Factory for AngularJS 1.x",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "angular",
+    "angularjs",
+    "listen",
+    "object"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
