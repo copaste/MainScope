@@ -170,6 +170,6 @@
   angular.module('MainScope', [])
     .factory('MainScope', function () {
       return proto.init();
-  });
+  	});
   
 }(typeof window === 'undefined' ? module.exports : window));
