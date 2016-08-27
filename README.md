@@ -57,6 +57,12 @@ MainScope.off('property.path');
 // Creates a new MainScope: 
 MainScope.$new();
 var newScope = MainScope.$new();
+
+// Detect changes on entire object with MainScope.$timesChanged
+// $timesChanged is private & non-writable property on MainScope which count each change in the object
+$scope.$watch(function() { return this.scope.$timesChanged; }, function(newVal, oldVal) {
+  console.log('MainScope has been changed');
+});
 ```
 
 # Test it in jsfiddle: 
