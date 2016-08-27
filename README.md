@@ -15,7 +15,11 @@ app.controller(['MainScope', function(MainsScope) {
       byAge: null,
       bySex: null,
       byWeight: null
-    }
+    },
+    members: [
+      {name: 'John'},
+      {name: 'Jane'}
+    ]
   };
   
   this.scope = MainScope;
@@ -23,6 +27,7 @@ app.controller(['MainScope', function(MainsScope) {
   this.scope.addProp( 'actions', ObjectILikeToListenOn ); 
   this.scope.addProp( 'filters', ObjectILikeToListenOn.filters );
   this.scope.addProp( 'sort', ObjectILikeToListenOn.sort );
+  this.scope.addProp( 'members', ObjectILikeToListenOn.members );
   
   // That is how we listen for changes on certain property
   this.scope.on('filters.age', function(newVal, oldVal, propMap, propName) {
@@ -31,6 +36,12 @@ app.controller(['MainScope', function(MainsScope) {
   
   // That is how we listen for changes on certain object
   this.scope.on('sort', function(newVal, oldVal, propMap, propName) {
+    console.log(propMap, propName, newVal, oldVal);
+  });
+  
+  // That is how we listen for changes on certain Array 
+  // MainScope listen for ('push', 'pop', 'shift', 'unshift', 'splice') method call on the current array
+  this.scope.on('members', function(newVal, oldVal, propMap, propName) {
     console.log(propMap, propName, newVal, oldVal);
   });
   
