@@ -6,7 +6,7 @@
   "authors": [
     "Yordan Nikolov <yordan.nikolov@outlook.com>"
   ],
-  "description": "Factory for AngularJS 1.x",
+  "description": "Factory service for AngularJS 1.x applications",
   "moduleType": [
     "amd"
   ],
