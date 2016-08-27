@@ -3,11 +3,11 @@
   /* exported defineMethod */
 
   var proto = {},
-    updater,
-    settable = false,
-    callbacks = {},
-    arrayMethods = ['push', 'pop', 'shift', 'unshift', 'splice'],
-    defaults = [];
+      updater,
+      settable = false,
+      callbacks = {},
+      arrayMethods = ['push', 'pop', 'shift', 'unshift', 'splice'],
+      defaults = [];
 
   proto = {
     createPrivateProperty: function(appendObj, propName) {
@@ -18,11 +18,11 @@
     },
     createProperty: function(appendObj, propName, val, mapper, level) {
       var protoObj = this,
-        map,
-        level = level || 0,
-        mapper = mapper || [propName];
-      // fix mapper if level is less than its lenght
-      mapper = mapper.slice(0, level);
+          map,
+          level = level || 0,
+          mapper = mapper || [propName];
+          // fix mapper if level is less than its lenght
+          mapper = mapper.slice(0, level);
 
       var obj = Object.defineProperty(appendObj, propName, {
         get: function() {
@@ -30,8 +30,8 @@
         },
         set: function(newVal) {
           var _self = this,
-            oldVal,
-            callback;
+              oldVal,
+              callback;
 
           if (newVal && newVal !== protoObj["_" + propName]) {
             if (angular.isObject(newVal) && !Array.isArray(newVal)) {
@@ -86,7 +86,10 @@
                 newVal[prop] = function() {
                   var oldArr = this.slice(0);
                   var newEntry = Array.prototype[prop].apply(this, arguments);
-
+                  
+                  callback = (callbacks[_self['_mapper_']] ||
+                              callbacks[_self['_mapper_'] + '.' + propName] ||
+                              callbacks['*']) || false;
                   if (typeof callback === 'function') {
                     callback(this, oldArr, _self['_mapper_'] + '.' + propName);
                   }
@@ -98,7 +101,7 @@
                 };
               });
             }
-            
+
             settable = false;
           }
         },
@@ -134,14 +137,14 @@
       function MainScope() {
         // Define inner property which will count the changes in the object
         Object.defineProperty(this, '$timesChanged', {
-        	get: function() { return this['_$timesChanged'] || 0; },
+          get: function() { return this['_$timesChanged'] || 0; },
           set: function(v) {
-          	if( settable===true ) {
-            	this['_$timesChanged'] = v;
+            if( settable===true ) {
+              this['_$timesChanged'] = v;
             }
           },
           enumerable: false,
-					configurable: false
+          configurable: false
         });
       }
 
