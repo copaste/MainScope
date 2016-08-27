@@ -1,0 +1,13 @@
+{
+  "name": "mainscope",
+  "version": "1.0.0",
+  "authors": [
+    "Yordan Nikolov <yordan.nikolov@outlook.com>"
+  ],
+  "description": "Factory service for AngularJS 1.x apllications",
+  "main": "MainScope.js",
+  "scripts": {},
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}
