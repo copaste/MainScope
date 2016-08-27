@@ -38,6 +38,7 @@ app.controller(['MainScope', function(MainsScope) {
   this.scope.off('filters.age');
 }])
 ```
+- It can be used to sharing data between controller also.
 
 #Methods
 ```javascript
