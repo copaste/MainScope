@@ -71,7 +71,11 @@
               protoObj.update(propName, newVal, oldVal, this['_mapper_'] + '.' + propName, this);
             }
 
-            callback = (callbacks[this['_mapper_']] || callbacks[this['_mapper_'] + '.' + propName] || callbacks['*']) || false;
+            callback = callbacks['*'] ||
+              (callbacks[_self['_mapper_']] ||
+              (callbacks[_self['_mapper_'] + '.' + propName] ||
+              (callbacks[propName] ))) || false;
+            
             if (typeof callback === 'function') {
               callback(newVal, oldVal, this['_mapper_'] + '.' + propName);
             }
@@ -86,10 +90,12 @@
                 newVal[prop] = function() {
                   var oldArr = this.slice(0);
                   var newEntry = Array.prototype[prop].apply(this, arguments);
+
+                  callback = callbacks['*'] ||
+                    (callbacks[_self['_mapper_']] ||
+                    (callbacks[_self['_mapper_'] + '.' + propName] ||
+                    (callbacks[propName] ))) || false;
                   
-                  callback = (callbacks[_self['_mapper_']] ||
-                              callbacks[_self['_mapper_'] + '.' + propName] ||
-                              callbacks['*']) || false;
                   if (typeof callback === 'function') {
                     callback(this, oldArr, _self['_mapper_'] + '.' + propName);
                   }
