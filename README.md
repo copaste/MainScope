@@ -58,5 +58,7 @@ MainScope.$new();
 var newScope = MainScope.$new();
 ```
 
+# Test it in jsfiddle: https://jsfiddle.net/yordan_nikolov/670qLy3f/ 
+
 # License
 MIT
