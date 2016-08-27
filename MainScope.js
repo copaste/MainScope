@@ -77,9 +77,8 @@
             }
 
             // Update the changes counter
-            Object.defineProperty(protoObj, "$timesChanged", {
-              value: protoObj.$timesChanged += 1
-            });
+            settable = true;
+            protoObj.$timesChanged += 1;
 
             // If the property is an array, detect changes from its methods
             if (Array.isArray(newVal)) {
@@ -93,15 +92,14 @@
                   }
 
                   // Update the changes counter
-                  Object.defineProperty(protoObj, "$timesChanged", {
-                    value: protoObj.$timesChanged += 1
-                  });
+                  protoObj.$timesChanged += 1
 
                   return newEntry;
                 };
               });
             }
-
+            
+            settable = false;
           }
         },
         enumerable: true,
@@ -136,10 +134,14 @@
       function MainScope() {
         // Define inner property which will count the changes in the object
         Object.defineProperty(this, '$timesChanged', {
-          writable: false,
+        	get: function() { return this['_$timesChanged'] || 0; },
+          set: function(v) {
+          	if( settable===true ) {
+            	this['_$timesChanged'] = v;
+            }
+          },
           enumerable: false,
-          configurable: true,
-          value: 0
+					configurable: false
         });
       }
 
