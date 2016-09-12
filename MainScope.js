@@ -53,6 +53,8 @@
                   _self["_" + propName][name] = val;
                 }
               });
+              
+              level = 0;
 
               return;
             }
